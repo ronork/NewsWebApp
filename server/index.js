@@ -40,7 +40,7 @@ app.get('/ajaxrequest/getNewsItems', function (req, res) {
     }
 })
 
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
     res.sendFile(rootPath + 'public/index.html');
 })
 

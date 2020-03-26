@@ -8,7 +8,8 @@ function genIndexHtml(path = "/bundle.js") {
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>NewsWebApp</title>
+      <link rel="preload" as="font" href="https://fonts.googleapis.com/css?family=Mukta&display=swap"></link>
+      <title>News Web App</title>
     </head>
     
     <body>
