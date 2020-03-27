@@ -5,15 +5,16 @@ body {
   margin: 0px;
   padding: 0px;
 }
-.wrapper {
-  position: relative;
-  clear: both;
-  margin: 0 auto 10px auto;
-  width: 100%;
-  overflow: hidden;
-}
 .tc {
   text-align: center;
+}
+.bt0
+{
+  bottom:0px;
+}
+.vam
+{
+  vertical-align: middle;
 }
 .brx100 {
   border-radius: 100px;
@@ -29,6 +30,13 @@ body {
 }
 .clr08c2 {
   color: #db5461;
+}
+.pf
+{
+  position: fixed;
+}
+.bgclr08c2 {
+  background-color: #db5461;
 }
 .slash {
   padding: 0px 8px 0px 8px;
@@ -134,7 +142,11 @@ p {
     margin-bottom: 10px;
     font-size: 14px;
   }
-  
+  .bgBlack
+  {
+    background-color: #212121;
+
+  }
   .card .text {
     color: #212121;
     margin-top: 20px;
@@ -149,7 +161,7 @@ p {
   .wrapper {
     position: relative;
     clear: both;
-    margin: 0 auto 10px auto;
+    margin: 0 auto 30px auto;
     width: 100%;
     overflow: hidden;
   }
@@ -208,4 +220,13 @@ p {
       box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
       transition: all 0.4s ease 0s;
       }
+.mt10{
+  margin-top: 10px;
+}
 
+.feedImg
+{
+  max-width: 100%;
+  height: auto;
+  padding: 10px;
+}

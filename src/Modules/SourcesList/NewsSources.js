@@ -3,6 +3,9 @@ import makeRequest from '@i-mart/fetcher';
 import { Link } from 'react-router-dom';
 import '../../Globals/css/index.css';
 import Loader from '../../utility/Loader/loaderView';
+import Paginate from '../../utility/Pagination/paginate';
+import PageHeader from '../../utility/PageHeader/pageheader';
+import helpers from '../../Globals/helpers';
 export default class NewsSources extends React.Component {
     constructor(props) {
         super(props);
@@ -13,23 +16,10 @@ export default class NewsSources extends React.Component {
         };
         this.constructList = this.constructList.bind(this);
     }
-    getPageIndex(srchParams) {
-        if (srchParams.indexOf('page=') > -1) {
-            try {
-                return srchParams.split('=')[1];
-            }
-            catch (err) {
-                console.log(err);
-                return "1";
-            }
-        }
-        else {
-            return "1";
-        }
-    }
     componentDidMount() {
+        console.log(this.props)
         let succ = (data) => {
-            this.setState({ sourceList: data, index: this.getPageIndex(this.props.location.search), loading: false })
+            this.setState({ sourceList: data, index: helpers.getPageIndex(this.props.location.search), loading: false })
         }
         let err = () => {
             this.setState({ sourceList: "error", loading: false })
@@ -54,19 +44,12 @@ export default class NewsSources extends React.Component {
         }
         else if (this.props.location.search != nextProps.location.search) {
             window.scrollTo(0, 0)
-            this.setState({ index: this.getPageIndex(nextProps.location.search) });
+            this.setState({ index: helpers.getPageIndex(nextProps.location.search) });
             return false;
         }
         else {
             return false;
         }
-    }
-    pageHeader() {
-        return (
-            <div className="top tc">
-                <div className="pageTitle dib">News on <span style={{ color: "#db5461" }}>Web</span></div>
-            </div>
-        )
     }
     constructList() {
         let list = [];
@@ -96,25 +79,18 @@ export default class NewsSources extends React.Component {
         if (this.state.loading) {
             return (
                 <>
-                    {this.pageHeader()}
+                    <PageHeader />
                     <Loader />
                 </>
             )
         }
         else {
-            return (<div className="wrapper">
-                {this.pageHeader()}
-                {this.state.sourceList ? this.constructList() : ''}
-                <div className="w100 tc"><div class="pagination">
-                    <a href="#">&laquo;</a>
-                    <a href="#">1</a>
-                    <a href="#" class="active">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">&raquo;</a>
-                </div></div>
+            return (<div>
+                <div className="wrapper">
+                    <PageHeader />
+                    {this.state.sourceList ? this.constructList() : ''}
+                </div>
+                <Paginate pageCount={9} selectedIndex={this.state.index} />
             </div>)
 
         }

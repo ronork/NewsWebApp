@@ -10,15 +10,11 @@
   }
   
   .pagination a.active {
-    background-color: #434343;
-    color: white;
-    border-radius: 5px;
+    color: #212121;
+    background-color: white;
+    /* border-radius: 5px; */
   }
-  
-  .pagination a:hover:not(.active) {
-    background-color: #ddd;
-    border-radius: 5px;
-  }
+
   
   
   

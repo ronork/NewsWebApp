@@ -11,6 +11,8 @@ const newsapi = new NewsAPI('5392ef443eea40368acb3445592ad2f7');
 const cors = require("cors");
 app.use(cors());
 app.use(compression());
+app.disable('etag');
+
 
 if (process.argv[2] == 'dev') {//serving chunks from different dir in development
     app.use(express.static(rootPath + 'dev-chunks'))
