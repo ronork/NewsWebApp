@@ -50,7 +50,8 @@ function srcFileBuild() {
 }
 function srcFileWatch() {
     let config = webpackConfig("development", "dev-chunks/", "bundle.js");
-    let compiler = webpack(config);
+    let compiler = webpack(config),
+        outputLog = {};
     genIndexHtml();
     compiler.watch({
         aggregateTimeout: 300,//delay before rebuilding once the first file changed

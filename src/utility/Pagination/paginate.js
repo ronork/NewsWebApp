@@ -26,7 +26,10 @@ export default class Paginate extends React.Component {
 
     setStartIndex(initialise = false) {
         let strtInd = ''
-        if (this.props.pageCount == this.props.selectedIndex)//the last Index is selected
+        if (this.props.pageCount < PaginateLength && this.props.pageCount == this.props.selectedIndex) {
+            strtInd = 1;
+        }
+        else if (this.props.pageCount == this.props.selectedIndex)//the last Index is selected
         {
             strtInd = this.props.pageCount - PaginateLength;
         }

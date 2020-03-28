@@ -6,6 +6,7 @@ import Loader from '../../utility/Loader/loaderView';
 import Paginate from '../../utility/Pagination/paginate';
 import PageHeader from '../../utility/PageHeader/pageheader';
 import helpers from '../../Globals/helpers';
+import ErrorPage from '../../utility/Error/errorPage';
 export default class NewsSources extends React.Component {
     constructor(props) {
         super(props);
@@ -83,6 +84,9 @@ export default class NewsSources extends React.Component {
                     <Loader />
                 </>
             )
+        }
+        else if (this.state.sourceList == "error") {
+            return (<ErrorPage isError={true} />)
         }
         else {
             return (<div>

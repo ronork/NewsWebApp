@@ -7,6 +7,9 @@ import Paginate from '../../utility/Pagination/paginate';
 import PageHeader from '../../utility/PageHeader/pageheader';
 import helpers from '../../Globals/helpers';
 import { PageSize } from '../../Globals/constants';
+import LazyLoad from 'react-lazyload';
+import BackButton from '../../utility/BackButton/backButton';
+import ErrorPage from '../../utility/Error/errorPage';
 
 export default class NewsFeed extends React.Component {
     constructor(props) {
@@ -14,7 +17,8 @@ export default class NewsFeed extends React.Component {
         this.state = {
             feedData: '',
             loading: true,
-            index: ''
+            index: '',
+            listLoading: false
         }
         this.pageCount = '';
         this.updateNewsFeed = this.updateNewsFeed.bind(this);
@@ -22,10 +26,10 @@ export default class NewsFeed extends React.Component {
     updateNewsFeed() {
         let succ = (data) => {
             this.pageCount = data.totalResults;
-            this.setState({ feedData: data.articles, loading: false, index: helpers.getPageIndex(this.props.location.search) })
+            this.setState({ feedData: data.articles, loading: false, listLoading: false, index: helpers.getPageIndex(this.props.location.search) })
         }
         let err = () => {
-            this.setState({ feedData: "error", loading: false })
+            this.setState({ feedData: "error", loading: false, listLoading: false })
         }
         makeRequest({ url: '/ajaxrequest/getNewsItems' + this.props.location.search }).then(data => {
             if (data.response.status == "ok") {
@@ -50,12 +54,24 @@ export default class NewsFeed extends React.Component {
             </div>
         );
     }
+    formatDate(dateString) {
+        let publishedDt = new Date(dateString);
+        return `${publishedDt.toDateString()}`
+
+    }
     constructCard(data, i) {
         return (
             <a key={"card-" + this.state.index + "-" + i} href={data.url} target="_blank">
                 <div className={i == 0 ? "card first" : "card"}>
                     <h2>{data.title}</h2>
-                    {data.urlToImage ? <p className="tc"><img className="feedImg" src={data.urlToImage} alt=""></img></p> : ''}
+                    {data.author ? <p>{data.author}</p> : ''}
+                    {data.publishedAt ? <p className="date">{this.formatDate(data.publishedAt)}</p> : ''}
+                    {data.urlToImage && data.urlToImage !== "null" ?
+                        <LazyLoad>
+                            <p className="tc">
+                                <img className="feedImg" loading="lazy" src={data.urlToImage} alt="Expected Image Here"></img>
+                            </p>
+                        </LazyLoad > : ''}
                     <p>
                         {data.description}
                     </p>
@@ -68,6 +84,8 @@ export default class NewsFeed extends React.Component {
     }
     componentDidUpdate(prevProps, prevState) {
         if (this.props.location.search !== prevProps.location.search) {
+            window.scrollTo(0, 0);
+            this.setState({ listLoading: true })
             this.updateNewsFeed();
         }
     }
@@ -80,19 +98,28 @@ export default class NewsFeed extends React.Component {
                 </>
             )
         }
+        else if (this.state.feedData == "error") {
+            return (
+                <ErrorPage isError={true} />
+            )
+        }
         else {
+            let totalPageCount = Math.ceil(this.pageCount / PageSize);
+            totalPageCount = totalPageCount > 10 ? 10 : totalPageCount
             return (<div>
                 <div className="wrapper">
                     <PageHeader />
-                    {this.constructList()}
+                    {this.state.listLoading ? <Loader /> :
+                        this.constructList()}
                 </div>
-                <Paginate location={this.props.location} page="newsFeed" pageCount={Math.ceil(this.pageCount / PageSize)} selectedIndex={this.state.index} />
+                <Paginate location={this.props.location} page="newsFeed" pageCount={totalPageCount} selectedIndex={this.state.index} />
             </div>)
 
         }
     }
     render() {
         return (<>
+            <BackButton backTo="/" />
             {this.constructView()}
         </>)
     }
