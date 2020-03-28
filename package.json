@@ -4,7 +4,6 @@
   "description": "A News listing web app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "webpack-watch": "node webpack watch",
     "dev": "node server dev",
     "build": "node webpack build"
