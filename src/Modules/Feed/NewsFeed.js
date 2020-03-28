@@ -8,7 +8,7 @@ import PageHeader from '../../utility/PageHeader/pageheader';
 import helpers from '../../Globals/helpers';
 import { PageSize } from '../../Globals/constants';
 import LazyLoad from 'react-lazyload';
-import BackButton from '../../utility/BackButton/backButton';
+import HomeButton from '../../utility/HomeButton/homeButton';
 import ErrorPage from '../../utility/Error/errorPage';
 
 export default class NewsFeed extends React.Component {
@@ -32,7 +32,7 @@ export default class NewsFeed extends React.Component {
             this.setState({ feedData: "error", loading: false, listLoading: false })
         }
         makeRequest({ url: '/ajaxrequest/getNewsItems' + this.props.location.search }).then(data => {
-            if (data.response.status == "ok") {
+            if (data.response.status == "ok" && data.response.articles.length > 0) {
                 succ(data.response)
             }
             else {
@@ -119,7 +119,7 @@ export default class NewsFeed extends React.Component {
     }
     render() {
         return (<>
-            <BackButton backTo="/" />
+            <HomeButton />
             {this.constructView()}
         </>)
     }
