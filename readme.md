@@ -16,6 +16,6 @@ A user should be able to select a news source to see daily feed from that source
 ##### For production
 - `node server` 
 - `npm run build`
-> This starts a node server at port 8000 and generated a <hash>build.js file in chunks folder of root dir.
+> This starts a node server at port 8000 and generates a <hash>build.js file in chunks folder of root dir.
 
 
