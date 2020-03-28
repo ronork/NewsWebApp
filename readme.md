@@ -19,3 +19,7 @@ A user should be able to select a news source to see daily feed from that source
 > This starts a node server at port 8000 and generates a <hash>build.js file in chunks folder of root dir.
 
 
+##### [Open News Web App ](https://rohannewswebapp-277a6.firebaseapp.com/)
+
+
+
