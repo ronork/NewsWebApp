@@ -8,7 +8,6 @@ module.exports = (mode = "production", chunksPath = "chunks/", filename = "[hash
     {
       entry: "./src/index.js",
       mode: mode,
-      devtool: "inline-source-map",
       module: {
         rules: [
           {
